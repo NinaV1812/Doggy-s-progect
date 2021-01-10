@@ -7,7 +7,6 @@ function App() {
   return (
     <div className="App">
       <UploadImage/>
-<p>Learn React</p>
     </div>
   );
 }
