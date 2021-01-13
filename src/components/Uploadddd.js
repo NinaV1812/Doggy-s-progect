@@ -143,14 +143,17 @@ const UploadImage = () => {
         </form>
       </div>
       <div class="d-flex justify-content-center">
+      <div class="img-fluid img-thumbnail">
+
         <img
           class="img-responsive"
           src={imageURL}
           alt="upload-preview"
           ref={imageRef}
         />
-
+  {/* </div> */}
         {/* {$imagePreview}  */}
+      </div>
       </div>
       <ul>
         {results.map(({ className, probability }) => (
