@@ -1,7 +1,10 @@
 import React, { useReducer, useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 import "../styles/UploadAndIdenfiry.css";
+import { createContext } from "react";
+
 
 const machine = {
   initial: "initial",
@@ -19,6 +22,9 @@ const machine = {
   },
 };
 
+
+export const CompactMode = createContext();
+
 function UploadAndClassify() {
   tf.setBackend("cpu");
   const [results, setResults] = useState([]);
@@ -26,6 +32,9 @@ function UploadAndClassify() {
   const [model, setModel] = useState(null);
   const imageRef = useRef();
   const inputRef = useRef();
+//   const BreedContext = React.createContext(results);
+//   console.log("BreedContex", BreedContext)
+
 
   const reducer = (state, event) =>
     machine.states[state].on[event] || machine.initial;
@@ -44,6 +53,7 @@ function UploadAndClassify() {
     next();
     const results = await model.classify(imageRef.current);
     setResults(results);
+
     next();
   };
 
@@ -59,7 +69,6 @@ function UploadAndClassify() {
     if (files.length > 0) {
       const url = URL.createObjectURL(event.target.files[0]);
       setImageURL(url);
-      next();
     }
   };
 
@@ -73,9 +82,14 @@ function UploadAndClassify() {
   };
 
   const { showImage, showResults } = machine.states[appState];
+  console.log(results, "results")
+
 
   return (
+    <CompactMode.Provider value={results}>
+
     <div class="container">
+        {actionButton[appState].text === "Upload Image" ? 
           <div class="row">
 
         <input
@@ -87,9 +101,8 @@ function UploadAndClassify() {
           onChange={handleUpload}
           ref={inputRef}
         />
-
-                        </div>
-
+         </div>
+         : null}
 
       <div class="img-fluid img-thumbnail">
         {showImage && (
@@ -114,13 +127,23 @@ function UploadAndClassify() {
       <div class="row">
         <button
           class="btn btn-success"
-          onClick={actionButton[appState].action || (() => {})}
+          onClick={actionButton[appState].action || (()=> {})}
         >
           {actionButton[appState].text}
         </button>
+
+        <button
+          class="btn btn-success"
+          onClick={()=> {dispatch(results)}}
+        >
+          Click to see more dogs
+        </button>
       </div>
     </div>
+    </CompactMode.Provider>
+
   );
 }
 
 export default UploadAndClassify;
+
