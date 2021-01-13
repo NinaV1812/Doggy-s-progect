@@ -14,7 +14,7 @@ const UploadImage = () => {
   const imageRef = useRef();
   const inputRef = useRef();
   const [imageURL, setImageURL] = useState(null);
-  const [displayInput, setDisplayInput]= useState(false)
+  const [displayInput, setDisplayInput] = useState(false);
   const dispatch = useDispatch();
 
   // const [appState, setAppstate] = ({
@@ -42,7 +42,6 @@ const UploadImage = () => {
     e.preventDefault();
     console.log("handle uploading-", picture.file);
   };
-
 
   const handleUpload = (event) => {
     const { files } = event.target;
@@ -93,10 +92,10 @@ const UploadImage = () => {
     dispatch(Breed(results));
   });
 
-  const combineFunction = ()=> {
-    loadModel()
-    setDisplayInput(true)
-  }
+  const combineFunction = () => {
+    loadModel();
+    setDisplayInput(true);
+  };
   return (
     <div id="top">
       <div class="landing-text">
@@ -111,58 +110,59 @@ const UploadImage = () => {
           Push To start
         </button>
         <div class="padding">
-        <div class="container">
-          <div class="row">
-            <form onSubmit={(e) => handleSubmit(e)}>
-              {displayInput === true ?
-              <div class="input-group">
-                <input
-                  class="form-control"
-                  id="inputGroupFile04"
-                  aria-describedby="inputGroupFileAddon04"
-                  aria-label="Upload"
-                  type="file"
-                  multiple="false"
-                  onChange={handleUpload}
-                ></input>
-                {imageURL ? (
-                  <button
-                    class="btn btn-success"
-                    type="button"
-                    id="inputGroupFileAddon04"
-                    onClick={identify}
-                  >
-                    Classify breed
-                  </button>
+          <div class="container">
+            <div class="row">
+              <form onSubmit={(e) => handleSubmit(e)}>
+                {displayInput === true ? (
+                  <div class="input-group">
+                    <input
+                      class="form-control"
+                      id="inputGroupFile04"
+                      aria-describedby="inputGroupFileAddon04"
+                      aria-label="Upload"
+                      type="file"
+                      multiple="false"
+                      onChange={handleUpload}
+                    ></input>
+                    {imageURL ? (
+                      <button
+                        class="btn btn-success"
+                        type="button"
+                        id="inputGroupFileAddon04"
+                        onClick={identify}
+                      >
+                        Classify breed
+                      </button>
+                    ) : null}
+                  </div>
                 ) : null}
-                
+              </form>
+
+              {displayInput === true ?
+
+              <div class="d-flex justify-content-center">
+                <div class="img-fluid img-thumbnail">
+                  <img
+                    class="img-responsive"
+                    src={imageURL}
+                    alt="upload-preview"
+                    ref={imageRef}
+                  />
+                </div>
               </div>
-              : null }
-            </form>
-            <div class="d-flex justify-content-center">
-              <div class="img-fluid img-thumbnail">
-                <img
-                  class="img-responsive"
-                  src={imageURL}
-                  alt="upload-preview"
-                  ref={imageRef}
-                />
-                {/* </div> */}
-                {/* {$imagePreview}  */}
+              : null}
+              <div>
+                <ul className="list">
+                  {results.map(({ className, probability }) => (
+                    <li key={className}>{`${className}: %${(
+                      probability * 100
+                    ).toFixed(2)}`}</li>
+                  ))}
+                </ul>
               </div>
-            </div>
-            <div>
-            <ul className="list">
-              {results.map(({ className, probability }) => (
-                <li key={className}>{`${className}: %${(
-                  probability * 100
-                ).toFixed(2)}`}</li>
-              ))}
-            </ul>
             </div>
           </div>
         </div>
-      </div>
       </div>
     </div>
   );
