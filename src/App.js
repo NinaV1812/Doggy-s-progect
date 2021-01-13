@@ -15,12 +15,8 @@ function App() {
 
 return(
   <div>
-    <div>
     <UploadImage/>
-</div>
-<div>
   <DogsLayout/>
-  </div>
     </div>
 
 )

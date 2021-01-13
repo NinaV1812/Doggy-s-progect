@@ -24,7 +24,7 @@ const UploadImage = () => {
   //   imageReady: "identifying",
   //   identifying: "complete",
   //   complete: "modelReady"})
-  // const next = () => setAppstate(appState + 1);
+  // const next = () => setAppstate();
 
   const reset = async () => {
     setResults([]);
@@ -43,7 +43,6 @@ const UploadImage = () => {
     console.log("handle uploading-", picture.file);
   };
 
-  // const upload = () => inputRef.current.click();
 
   const handleUpload = (event) => {
     const { files } = event.target;
@@ -82,15 +81,6 @@ const UploadImage = () => {
       <div className="previewText">Please select an Image for Preview</div>
     );
   }
-
-  // const actionButton = {
-  //   initial: { action: loadModel, text: "Load Model" },
-  //   loadingModel: { text: "Loading Model..." },
-  //   modelReady: { action: upload, text: "Upload Image" },
-  //   imageReady: { action: identify, text: "Identify Breed" },
-  //   identifying: { text: "Identifying..." },
-  //   complete: { action: reset, text: "Reset" },
-  // };
 
   const identify = async () => {
     const results = await model.classify(imageRef.current);
