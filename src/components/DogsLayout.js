@@ -12,6 +12,7 @@ const DogsLayout = () => {
   const breedy = useSelector(selectBreed);
   // const {breedy} = useContext(CompactMode)
   // const { isCompact } = useContext(CompactMode);
+  const [hasMore, setHasMore] = useState(true);
   const param = breedy[0]
     ? breedy[0].split(" ")[0].replace(",", "").toLowerCase()
     : "beagle";
@@ -23,14 +24,13 @@ const DogsLayout = () => {
   console.log("breed in dogs layout", breedy);
   console.log("param ", param);
 
-
   useEffect(() => {
     const fetchData = async () => {
       console.log("param in useeffect ", param);
 
       const result = await axios(`https://dog.ceo/api/breed/${param}/images`);
 
-      const myFiveteenDogs = result.data.message.slice(0, 16);
+      const myFiveteenDogs = result.data.message.slice(0, 17);
 
       setDodsPictures(myFiveteenDogs);
       //   console.log("result", result.data.message);
@@ -41,46 +41,61 @@ const DogsLayout = () => {
     fetchData();
   }, [param]);
 
-  const clichHandel = () => {
-    const fetchData = async () => {
-      const result = await axios(`https://dog.ceo/api/breed/${breed}/images`);
+  const clichHandel = async () => {
+    const result = await axios(`https://dog.ceo/api/breed/${param}/images`);
 
-      const myFiveteenDogs = result.data.message.slice(0, 16);
+    const myFiveteenDogs = result.data.message.slice(0, 16);
 
-      setDodsPictures(myFiveteenDogs);
-      //   console.log("result", result.data.message);
-      console.log("myFiveteenDogs", dogsPictures);
-    };
-    fetchData();
+    setDodsPictures(myFiveteenDogs);
+    setHasMore(false);
+    //   console.log("result", result.data.message);
+    console.log("mynewFiveteenDogs", dogsPictures);
   };
 
   if (breedy[0]) {
     return (
-      <div class="container">
-        <div>
-          {/* <button onClick={clichHandel}>Show me more dogs</button> */}
-        </div>
-        {/* <div class="col-lg-4 col-sm-6 thumbnail"> */}
-        <div id="photos">
-          {dogsPictures.map((picture) => {
-            return (
-              <img
-                class="img-responsive"
-                src={picture}
-                alt=""
-                key={picture}
-                data-wow-delay="0.3s"
-              />
-            );
-          })}
-        </div>
+      <div  id="backGround">
+
+      <InfiniteScroll
+        dataLength={dogsPictures.length} //This is important field to render the next data
+        next={clichHandel}
+        // hasMore={hasMore}
+        loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+      >
+          <div>
+            {/* <button onClick={clichHandel}>Show me more dogs</button> */}
+          </div>
+          {/* <div class="col-lg-4 col-sm-6 thumbnail"> */}
+          <div id="photos">
+            {dogsPictures.map((picture) => {
+              return (
+                <img
+                  class="img-responsive"
+                  src={picture}
+                  alt=""
+                  key={picture}
+                  data-wow-delay="0.5s"
+                />
+              );
+            })}
+          </div>
+      </InfiniteScroll>
       </div>
+
     );
   } else {
-    return(<div> <p>Loading</p> 
-              {/* <button onClick={clichHandel}>Show me more dogs</button> */}
-
-    </div>);
+    return (
+      <div id="whateSpace">
+        {" "}
+        {/* <p>Loading</p> */}
+        {/* <button onClick={clichHandel}>Show me more dogs</button> */}
+      </div>
+    );
   }
 };
 export default DogsLayout;

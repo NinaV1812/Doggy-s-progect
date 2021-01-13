@@ -1,3 +1,10 @@
+#backGround{
+  background-color: #AEE2FA;
+  padding: 20px
+}
+#whateSpace{
+  padding: 20px
+}
 #photos {
     /* Prevent vertical gaps */
     line-height: 0;
