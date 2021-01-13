@@ -4,11 +4,7 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 import { useDispatch } from "react-redux";
 import { Breed } from "../store/breed/action";
-
-// export const Breed = breed => ({
-//   type: "breed/result",
-//   payload: breed,
-// });
+// import background from "../src/images/backgroundPicture.png";
 
 const UploadImage = () => {
   tf.setBackend("cpu");
@@ -18,6 +14,7 @@ const UploadImage = () => {
   const imageRef = useRef();
   const inputRef = useRef();
   const [imageURL, setImageURL] = useState(null);
+  const [displayInput, setDisplayInput]= useState(false)
   const dispatch = useDispatch();
 
   // const [appState, setAppstate] = ({
@@ -102,66 +99,81 @@ const UploadImage = () => {
     console.log("results", results);
     dispatch(Breed(results));
   };
-  useEffect(()=> {
-    dispatch(Breed(results))
-  })
+  useEffect(() => {
+    dispatch(Breed(results));
+  });
+
+  const combineFunction = ()=> {
+    loadModel()
+    setDisplayInput(true)
+  }
   return (
-    <div class="container">
-      <h1>Nina</h1>
-
-      <div class="row">
-        <form onSubmit={(e) => handleSubmit(e)}>
-          <div class="input-group">
-            <input
-              class="form-control"
-              id="inputGroupFile04"
-              aria-describedby="inputGroupFileAddon04"
-              aria-label="Upload"
-              type="file"
-              multiple="false"
-              onChange={handleUpload}
-            ></input>
-            <button
-              class="btn btn-success"
-              type="button"
-              id="inputGroupFileAddon04"
-              // onClick={actionButton[appState].action || (()=> {})}
-              onClick={loadModel}
-            >
-              loadModel
-            </button>
-            <button
-              class="btn btn-success"
-              type="button"
-              id="inputGroupFileAddon04"
-              // onClick={actionButton[appState].action || (()=> {})}
-              onClick={identify}
-            >
-              identify
-            </button>
+    <div id="top">
+      <div class="landing-text">
+        <h1>Geting Started</h1>
+        <h3>Classify your dog</h3>
+        <button
+          class="btn btn-default btn-lg"
+          type="button"
+          id="inputGroupFileAddon04"
+          onClick={combineFunction}
+        >
+          Push To start
+        </button>
+        <div class="padding">
+        <div class="container">
+          <div class="row">
+            <form onSubmit={(e) => handleSubmit(e)}>
+              {displayInput === true ?
+              <div class="input-group">
+                <input
+                  class="form-control"
+                  id="inputGroupFile04"
+                  aria-describedby="inputGroupFileAddon04"
+                  aria-label="Upload"
+                  type="file"
+                  multiple="false"
+                  onChange={handleUpload}
+                ></input>
+                {imageURL ? (
+                  <button
+                    class="btn btn-success"
+                    type="button"
+                    id="inputGroupFileAddon04"
+                    onClick={identify}
+                  >
+                    Classify breed
+                  </button>
+                ) : null}
+                
+              </div>
+              : null }
+            </form>
+            <div class="d-flex justify-content-center">
+              <div class="img-fluid img-thumbnail">
+                <img
+                  class="img-responsive"
+                  src={imageURL}
+                  alt="upload-preview"
+                  ref={imageRef}
+                />
+                {/* </div> */}
+                {/* {$imagePreview}  */}
+              </div>
+            </div>
+            <div>
+            <ul className="list">
+              {results.map(({ className, probability }) => (
+                <li key={className}>{`${className}: %${(
+                  probability * 100
+                ).toFixed(2)}`}</li>
+              ))}
+            </ul>
+            </div>
           </div>
-        </form>
-      </div>
-      <div class="d-flex justify-content-center">
-      <div class="img-fluid img-thumbnail">
-
-        <img
-          class="img-responsive"
-          src={imageURL}
-          alt="upload-preview"
-          ref={imageRef}
-        />
-  {/* </div> */}
-        {/* {$imagePreview}  */}
+        </div>
       </div>
       </div>
-      <ul>
-        {results.map(({ className, probability }) => (
-          <li key={className}>{`${className}: %${(probability * 100).toFixed(
-            2
-          )}`}</li>
-        ))}
-      </ul>
     </div>
   );
 };
