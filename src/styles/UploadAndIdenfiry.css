@@ -24,10 +24,16 @@ img {
   display: table-cell;
   text-align: center;
   vertical-align: middle;
+  /* padding-bottom: 20px; */
+  /* margin-bottom: 40px; */
 }
 .landing-text h1 {
   font-size: 500%;
   font-weight: 700;
+}
+.space{
+  padding-bottom: 20px;
+  margin-bottom: 40px;
 }
 
 ul {
