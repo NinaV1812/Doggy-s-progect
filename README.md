@@ -4,8 +4,8 @@
 The app classifies dog's breed based on a picture and shows you other dogs with a similar breed. 
 
 ## How to start the app locally?
-1. Clonw the repo.
-2. Run "npm inatall".
+1. Clone the repo. 
+2. Run "npm install". 
 3. Run "npm run start" or "npm start".
 
 ## How to use it? 
