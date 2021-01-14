@@ -35,6 +35,7 @@ The app classifies dog's breed based on a picture and shows you other dogs with 
 
 ## Roadmap:
 * better matching between MobileNets ans Dod API (some breeds cannot be found, in this case you won't be able to see gallery of images with other dogs, but you still get your classification results.);
-* testing the app.
+* testing the app;
+* add Infinite Scrolling for dogs gallery. 
 
 
