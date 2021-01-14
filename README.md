@@ -17,8 +17,6 @@ The app classifies dog's breed based on a picture and shows you other dogs with 
 * see the result;
 * enloy other doggyes!
 
-*some breeds cannot be found, in this case you won't be able to see gallery of images with other dogs, but you still get your classification results.
-
 # How the project was done? 
 
 ## Project board
@@ -35,6 +33,8 @@ The app classifies dog's breed based on a picture and shows you other dogs with 
 * Redux for managing the app's global state (It's easy to set up and to maintain with a small app).
 
 
-
+## Roadmap:
+* better matching between MobileNets ans Dod API (some breeds cannot be found, in this case you won't be able to see gallery of images with other dogs, but you still get your classification results.);
+* testing the app.
 
 
