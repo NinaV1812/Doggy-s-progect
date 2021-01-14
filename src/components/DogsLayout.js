@@ -8,11 +8,8 @@ import useBreedSearch from "../components/UseBreedSearch"
 import "../styles/DogsLayout.css";
 
 const DogsLayout = () => {
-  const breed = "beagle";
   const [dogsPictures, setDodsPictures] = useState();
   const breedy = useSelector(selectBreed);
-  // const {breedy} = useContext(CompactMode)
-  // const { isCompact } = useContext(CompactMode);
   const [pageNumber, setPageNumber] = useState(1)
   // const [hasMore, setHasMore] = useState(true);
   const param = breedy[0]
