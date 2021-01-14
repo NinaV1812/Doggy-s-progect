@@ -4,7 +4,8 @@ import * as mobilenet from "@tensorflow-models/mobilenet";
 import * as tf from "@tensorflow/tfjs";
 import { useDispatch } from "react-redux";
 import { Breed } from "../store/breed/action";
-// import background from "../src/images/backgroundPicture.png";
+import "../styles/UploadAndIdenfiry.css";
+
 
 const UploadImage = () => {
   tf.setBackend("cpu");
@@ -17,25 +18,14 @@ const UploadImage = () => {
   const [displayInput, setDisplayInput] = useState(false);
   const dispatch = useDispatch();
 
-  // const [appState, setAppstate] = ({
-  //   initial: "loadingModel",
-  //   loadingModel: "modelReady",
-  //   modelReady: "imageReady",
-  //   imageReady: "identifying",
-  //   identifying: "complete",
-  //   complete: "modelReady"})
-  // const next = () => setAppstate();
 
   const reset = async () => {
     setResults([]);
-    // next();
   };
 
   const loadModel = async () => {
-    // next();
     const model = await mobilenet.load();
     setModel(model);
-    // next();
     console.log("the model is loaded");
   };
   const handleSubmit = (e) => {
@@ -138,19 +128,18 @@ const UploadImage = () => {
                 ) : null}
               </form>
 
-              {displayInput === true ?
-
-              <div class="d-flex justify-content-center">
-                <div class="img-fluid img-thumbnail">
-                  <img
-                    class="img-responsive"
-                    src={imageURL}
-                    alt="upload-preview"
-                    ref={imageRef}
-                  />
+              {displayInput === true ? (
+                <div class="d-flex justify-content-center">
+                  <div class="img-fluid img-thumbnail">
+                    <img
+                      class="img-responsive"
+                      src={imageURL}
+                      alt="upload-preview"
+                      ref={imageRef}
+                    />
+                  </div>
                 </div>
-              </div>
-              : null}
+              ) : null}
               <div>
                 <ul className="list">
                   {results.map(({ className, probability }) => (
